@@ -111,7 +111,6 @@ export async function getUpcomingAndPaidBookings(guestId) {
     throw new Error("Bookings could not get loaded");
   }
 
-  // console.log(data);
   return data;
 }
 

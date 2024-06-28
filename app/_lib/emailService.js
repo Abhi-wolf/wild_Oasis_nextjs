@@ -16,8 +16,6 @@ const sendEmail = async ({ to, subject, text }) => {
     html: text,
   };
 
-  console.log(mailOptions);
-
   try {
     await transporter.sendMail(mailOptions);
     // res.status(200).json({ message: "Email sent successfully" });

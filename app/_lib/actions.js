@@ -170,8 +170,6 @@ export async function paymentSuccessful({ bookingId }) {
     throw new Error("Booking could not be updated");
   }
 
-  console.log(data);
-
   const readableStartDate = format(parseISO(data.startDate), "MMMM dd, yyyy");
   const readableEndDate = format(parseISO(data.endDate), "MMMM dd, yyyy");
   const to = data.guests.email;

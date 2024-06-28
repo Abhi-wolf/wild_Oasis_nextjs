@@ -12,7 +12,6 @@ export async function GET() {
   const data = await result.json();
 
   const bookings = await getEmails();
-  console.log(bookings);
 
   for (const booking of bookings) {
     try {
@@ -57,11 +56,9 @@ export async function GET() {
   </div>
 `;
 
-      console.log(text);
-
       await sendEmail({ to, subject, text });
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
