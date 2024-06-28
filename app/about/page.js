@@ -14,13 +14,13 @@ export default async function Page() {
   const cabins = await getCabins();
 
   return (
-    <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
+    <div className="grid grid-cols-3 px-2 md:px-0 md:grid-cols-5 gap-x-14 gap-y-16 md:gap-x-24 md:gap-y-32 text-md: md:text-lg items-center">
       <div className="col-span-3">
-        <h1 className="text-4xl mb-10 text-accent-400 font-medium">
+        <h1 className="text-2xl md:text-4xl mb-4 md:mb-10 text-accent-400 font-medium">
           Welcome to The Wild Oasis
         </h1>
 
-        <div className="space-y-8">
+        <div className="space-y-4 md:space-y-8">
           <p>
             Where nature&apos;s beauty and comfortable living blend seamlessly.
             Hidden away in the heart of the Italian Dolomites, this is your
@@ -42,7 +42,7 @@ export default async function Page() {
         </div>
       </div>
 
-      <div className="col-span-2">
+      <div className="col-span-3 md:col-span-2">
         {/* where we already know the height and width and the image is locally imported */}
         <Image
           src={image1}
@@ -50,7 +50,7 @@ export default async function Page() {
         />
       </div>
 
-      <div className="col-span-2 relative aspect-square ">
+      <div className="col-span-3 md:col-span-2 relative aspect-square ">
         {/* for dynamic imported images like from a database */}
         <Image
           src="/about-2.jpg"
@@ -61,7 +61,7 @@ export default async function Page() {
       </div>
 
       <div className="col-span-3">
-        <h1 className="text-4xl mb-10 text-accent-400 font-medium">
+        <h1 className="text-2xl md:text-4xl mb-4 md:mb-10 text-accent-400 font-medium">
           Managed by our family since 1962
         </h1>
 
@@ -84,7 +84,7 @@ export default async function Page() {
           <div>
             <Link
               href="/cabins"
-              className="inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
+              className="inline-block mt-4 bg-accent-500 px-4 py-3 md:px-8 md:py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
             >
               Explore our luxury cabins
             </Link>

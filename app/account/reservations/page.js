@@ -27,7 +27,7 @@ export default async function Page() {
           </Link>
         </p>
       ) : (
-        <ReservationList bookings={bookings} />
+        <ReservationList bookings={bookings} user={session?.user} />
       )}
     </div>
   );

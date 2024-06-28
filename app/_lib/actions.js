@@ -5,7 +5,6 @@ import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
 import { redirect } from "next/navigation";
-import { formatDate } from "date-fns";
 
 export async function signInAction() {
   await signIn("google", {
@@ -38,7 +37,6 @@ export async function updateGuest(formData) {
     .single();
 
   if (error) {
-    console.error(error);
     throw new Error("Guest could not be updated");
   }
 
@@ -64,7 +62,6 @@ export async function deleteBooking(bookingId) {
     .eq("id", bookingId);
 
   if (error) {
-    console.error(error);
     throw new Error("Booking could not be deleted");
   }
 
@@ -100,7 +97,6 @@ export async function updateBooking(formData) {
     .single();
 
   if (error) {
-    console.error(error);
     throw new Error("Booking could not be updated");
   }
 
@@ -128,18 +124,49 @@ export async function createBooking(bookingData, formatData) {
     status: "unconfirmed",
   };
 
+  console.log("new booking = ", newBooking);
+
+  // const { data, error } = await supabase
+  //   .from("bookings")
+  //   .insert([newBooking])
+  //   // So that the newly created object gets returned!
+  //   .select()
+  //   .single();
+
+  // if (error) {
+  //   throw new Error("Booking could not be created");
+  // }
+
+  // revalidatePath(`/cabins/${bookingData.cabinId}`);
+  // redirect("/cabins/thankyou");
+}
+
+export async function paymentSuccessful({ bookingId }) {
+  if (!bookingId) throw new Error("Booking Id not found");
+
+  // authentication
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  const guestBookings = await getBookings(session.user.guestId);
+
+  const guestBookingIds = guestBookings.map((booking) => booking.id);
+
+  // authorization
+  if (!guestBookingIds.includes(bookingId))
+    throw new Error("You are not allowed to update this booking");
+
+  // update data
   const { data, error } = await supabase
     .from("bookings")
-    .insert([newBooking])
-    // So that the newly created object gets returned!
+    .update({ isPaid: true })
+    .eq("id", bookingId)
     .select()
     .single();
 
   if (error) {
-    console.error(error);
-    throw new Error("Booking could not be created");
+    throw new Error("Booking could not be updated");
   }
 
-  revalidatePath(`/cabins/${bookingData.cabinId}`);
-  redirect("/cabins/thankyou");
+  return data;
 }

@@ -4,7 +4,7 @@ import { useOptimistic } from "react";
 import ReservationCard from "./ReservationCard";
 import { deleteBooking } from "../_lib/actions";
 
-export default function ReservationList({ bookings }) {
+export default function ReservationList({ bookings, user }) {
   const [optimisticBookings, optimisticDelete] = useOptimistic(
     bookings,
     (currBookings, bookingId) => {
@@ -18,12 +18,13 @@ export default function ReservationList({ bookings }) {
   }
 
   return (
-    <ul className="space-y-6">
+    <ul className="space-y-6 overflow-y-scroll max-h-[670px]">
       {optimisticBookings?.map((booking) => (
         <ReservationCard
           booking={booking}
           key={booking.id}
           onDelete={handleDelete}
+          user={user}
         />
       ))}
     </ul>
