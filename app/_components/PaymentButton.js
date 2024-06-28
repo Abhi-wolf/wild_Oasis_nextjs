@@ -49,7 +49,7 @@ export default function PaymentButton({ bookingId, amount, user }) {
           }),
         });
 
-        if (res?.error === false) {
+        if (response?.error === false) {
           router.refresh();
         }
         setIsLoading(false);
