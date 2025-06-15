@@ -1,10 +1,10 @@
-import Logo from "./_components/Logo";
-import Navigation from "./_components/Navigation";
 import { Josefin_Sans } from "next/font/google";
 import "@/app/_styles/global.css";
 import Header from "./_components/Header";
 import { ReservationProvider } from "./_components/ReservationContext";
 import Script from "next/script";
+import { Toaster } from "react-hot-toast";
+import AIChatBoxButton from "./_components/AIChatBotButton";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -30,8 +30,10 @@ export default function RootLayout({ children }) {
           <Header />
           <div className="flex-1 px-2 md:px-8 py-12 grid">
             <main className="max-w-7xl mx-auto  w-full ">
+              <Toaster position="top-center" />
               <ReservationProvider>{children}</ReservationProvider>
             </main>
+            <AIChatBoxButton />
           </div>
         </body>
       </html>

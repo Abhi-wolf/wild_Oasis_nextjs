@@ -10,6 +10,8 @@ export default function PaymentButton({ bookingId, amount, user }) {
   const router = useRouter();
 
   async function handlePayment() {
+    // console.log("HANDLE PAYMENT FUNCTION ");
+
     setIsLoading(true);
     const data = await fetch(`/api/payment/create`, {
       method: "POST",
@@ -21,13 +23,18 @@ export default function PaymentButton({ bookingId, amount, user }) {
       }),
     });
 
+    // console.log("HANDLE PAYMENT FUNCTION RES = ", data);
+
     if (!data.ok) {
       throw new Error("Network response was not ok");
     }
 
     const { order } = await data?.json();
+
+    // console.log("ORDER 2= ", order);
+
     const options = {
-      key: process.env.RAZORPAY_KEY_ID,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       name: user?.email,
       currency: order.currency,
       order_id: order.id,
@@ -59,8 +66,12 @@ export default function PaymentButton({ bookingId, amount, user }) {
       },
     };
 
+    // console.log("OPTIONS = ", options);
+
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
+
+    // console.log("PAYMENT OBJECT = ", paymentObject);
 
     paymentObject.on("payment.failed", function (response) {
       alert("Payment failed. Please try again.");

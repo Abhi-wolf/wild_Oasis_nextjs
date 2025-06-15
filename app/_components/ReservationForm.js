@@ -4,6 +4,7 @@ import { differenceInDays } from "date-fns";
 import { useReservation } from "./ReservationContext";
 import { createBooking } from "../_lib/actions";
 import SubmitButton from "./SubmitButton";
+import toast from "react-hot-toast";
 
 function ReservationForm({ cabin, user }) {
   // CHANGE
@@ -47,7 +48,14 @@ function ReservationForm({ cabin, user }) {
         className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
         // action={createBookingWithData}
         action={async (formatData) => {
-          await createBookingWithData(formatData);
+          const res = await createBookingWithData(formatData);
+          // toast.promise(res, {
+          //   loading: "Loading",
+          //   success: "Got the data",
+          //   error: "Error when fetching",
+          // });
+
+          toast.success("Success full");
           resetRange();
         }}
       >

@@ -3,6 +3,7 @@
 import { useOptimistic } from "react";
 import ReservationCard from "./ReservationCard";
 import { deleteBooking } from "../_lib/actions";
+import toast from "react-hot-toast";
 
 export default function ReservationList({ bookings, user }) {
   const [optimisticBookings, optimisticDelete] = useOptimistic(
@@ -14,7 +15,10 @@ export default function ReservationList({ bookings, user }) {
 
   async function handleDelete(bookingId) {
     optimisticDelete(bookingId);
-    await deleteBooking(bookingId);
+    const { error } = await deleteBooking(bookingId);
+
+    if (error) toast.error(error);
+    else toast.success("Successfully deleted");
   }
 
   return (
